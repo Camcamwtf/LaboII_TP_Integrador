@@ -166,7 +166,7 @@
             // 
             lblResultado.AutoSize = true;
             lblResultado.Font = new Font("ARCO", 30F, FontStyle.Bold, GraphicsUnit.Point);
-            lblResultado.Location = new Point(63, 49);
+            lblResultado.Location = new Point(51, 52);
             lblResultado.Name = "lblResultado";
             lblResultado.Size = new Size(281, 42);
             lblResultado.TabIndex = 7;

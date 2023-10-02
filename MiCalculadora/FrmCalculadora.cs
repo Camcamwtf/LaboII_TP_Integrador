@@ -1,5 +1,4 @@
 using Entidades;
-using System.Reflection.Metadata.Ecma335;
 using static Entidades.Numeracion;
 
 namespace MiCalculadora
@@ -28,19 +27,38 @@ namespace MiCalculadora
 
         private void btnOperar_Click(object sender, EventArgs evento)
         {
-            string primerOperandoString = txtPrimerOperador.Text;
-            string segundoOperandoString = txtSegundoOperador.Text;
-            string operador = (string)cmbOperacion.SelectedItem ?? "";
+            if (cmbOperacion.Text == "")
+            {
+                cmbOperacion.SelectedIndex = 0; // Por defecto, muestra el primer operador en el listado cuando no seleccionemos ninguno = '+'
+            }
 
-            _ = double.TryParse(primerOperandoString, out double primerOperandoDouble);
-            _ = double.TryParse(segundoOperandoString, out double segundoOperandoDouble);
+            if (txtPrimerOperador.Text == "" || txtSegundoOperador.Text == "")
+            {
+                MessageBox.Show("No se puede realizar el cálculo porque falta ingresar algún operando. Por favor, ingrese un número.", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                lblResultado.Text = "Resultado: Número inválido.";
+            }
+            else
+            {
+                if (rdbBinario.Checked == false && rdbDecimal.Checked == false)
+                {
+                    rdbDecimal.Checked = true;
+                }
 
-            primerOperando = new(primerOperandoDouble, this.Sistema);
-            segundoOperando = new(segundoOperandoDouble, this.Sistema);
-            calculadora = new(primerOperando, segundoOperando);
+                string primerOperandoString = txtPrimerOperador.Text;
+                string segundoOperandoString = txtSegundoOperador.Text;
+                string operador = (string)cmbOperacion.SelectedItem ?? "";
 
-            resultado = calculadora.Operar(operador.FirstOrDefault());
-            SetResultado();
+                _ = double.TryParse(primerOperandoString, out double primerOperandoDouble);
+                _ = double.TryParse(segundoOperandoString, out double segundoOperandoDouble);
+
+                primerOperando = new(primerOperandoDouble, this.Sistema);
+                segundoOperando = new(segundoOperandoDouble, this.Sistema);
+                calculadora = new(primerOperando, segundoOperando);
+
+                resultado = calculadora.Operar(operador.FirstOrDefault());
+                SetResultado();
+            }
         }
 
         private void SetResultado()
@@ -48,7 +66,7 @@ namespace MiCalculadora
             string textoResultado = "";
             if (resultado is not null)
             {
-                textoResultado = this.resultado.Valor;
+                textoResultado = resultado.ConvertirA(resultado.Sistema);
             }
 
             lblResultado.Text = $"Resultado: {textoResultado}";

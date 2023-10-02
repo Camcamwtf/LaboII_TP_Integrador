@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Entidades
+﻿namespace Entidades
 {
     public class Numeracion
     {
@@ -63,7 +61,7 @@ namespace Entidades
             }
             else
             {
-                return this.Valor;
+                return valorNumerico.ToString();
             }
         }
 
@@ -73,7 +71,7 @@ namespace Entidades
             string valorBinario = "";
             int valorConvertido = Math.Abs(valor);
 
-            if (valorConvertido == '0')
+            if (valorConvertido == 0)
             {
                 return "0";
             }
@@ -134,7 +132,12 @@ namespace Entidades
             double valor = 0;
             if (n1 == n2)
             {
-                valor = double.Parse(n1.ConvertirA(n1.Sistema)) - double.Parse(n2.ConvertirA(n2.Sistema));
+                valor = double.Parse(n1.ConvertirA((n1.sistema))) - double.Parse(n2.ConvertirA(n2.sistema));
+
+                if (n1.Sistema == ESistema.Binario && n2.Sistema == ESistema.Binario)
+                {
+                    valor = double.Parse(DecimalABinario(valor.ToString()));
+                }
             }
 
             return new Numeracion(valor, n1.Sistema);
@@ -145,7 +148,12 @@ namespace Entidades
             double valor = 0;
             if (n1 == n2)
             {
-                valor = double.Parse(n1.ConvertirA(n1.Sistema)) * double.Parse(n2.ConvertirA(n2.Sistema));
+                valor = double.Parse(n1.ConvertirA((n1.sistema))) * double.Parse(n2.ConvertirA(n2.sistema));
+
+                if (n1.Sistema == ESistema.Binario && n2.Sistema == ESistema.Binario)
+                {
+                    valor = double.Parse(DecimalABinario(valor.ToString()));
+                }
             }
 
             return new Numeracion(valor, n1.Sistema);
@@ -156,7 +164,12 @@ namespace Entidades
             double valor = 0;
             if (n1 == n2)
             {
-                valor = double.Parse(n1.ConvertirA(n1.Sistema)) / double.Parse(n2.ConvertirA(n2.Sistema));
+                valor = double.Parse(n1.ConvertirA((n1.sistema))) / double.Parse(n2.ConvertirA(n2.sistema));
+
+                if (n1.Sistema == ESistema.Binario && n2.Sistema == ESistema.Binario)
+                {
+                    valor = double.Parse(DecimalABinario(valor.ToString()));
+                }
             }
 
             return new Numeracion(valor, n1.Sistema);
@@ -167,7 +180,12 @@ namespace Entidades
             double valor = 0;
             if (n1 == n2)
             {
-                valor = double.Parse(n1.ConvertirA(n1.Sistema)) + double.Parse(n2.ConvertirA(n2.Sistema));
+                valor = double.Parse(n1.ConvertirA((n1.sistema))) + double.Parse(n2.ConvertirA(n2.sistema));
+
+                if (n1.Sistema == ESistema.Binario && n2.Sistema == ESistema.Binario)
+                {
+                    valor = double.Parse(DecimalABinario(valor.ToString()));
+                }
             }
 
             return new Numeracion(valor, n1.Sistema);
